@@ -16,6 +16,7 @@ body {
   background-color: #ffffff;
   padding: 10px;
   font-weight: bold;
+  max-height: 100%;
 
 }
 
@@ -33,10 +34,6 @@ body {
   color: #000000;
   font-family: Roboto, sans-serif;
 }
-
-/* #tools a{
-  
-} */
 
 #tools a {
   color: #000000;
