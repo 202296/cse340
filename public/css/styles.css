@@ -1,6 +1,205 @@
 /******* Change Box Model ***************/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap');
+
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+  text-decoration: none;
 }
+ 
+body {
+  margin: 0;
+}
+
+#wrapper {
+  background-color: #ffffff;
+  padding: 10px;
+  font-weight: bold;
+
+}
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+.siteName {
+  font-size: 2rem;
+}
+
+.siteName a {
+  color: #000000;
+  font-family: Roboto, sans-serif;
+}
+
+/* #tools a{
+  
+} */
+
+#tools a {
+  color: #000000;
+  font-family: Roboto, sans-serif;
+}
+
+nav {
+  background-color: #000000;
+}
+
+nav ul{
+  list-style-type: none;
+  font-family: Roboto, sans-serif;
+  font-size: 1.3rem;
+  display: flex;
+  color: #ffffff;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+h1, h2, h3, h4, h5{
+  font-size: 25px;
+  font-family: Roboto, sans-serif;
+}
+
+
+.vehicle_img {
+  max-width: 100%;
+}
+
+.description {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: rgb(55, 55, 177);
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  max-width: 20ch;
+}
+
+.description h3 {
+  margin: 5px 0;
+  font-size: 18px;
+}
+
+.description h2 {
+  font-size: 23px;
+  margin-bottom: 5px;
+}
+
+.content {
+  position: relative;
+}
+
+.today {
+  width: 130px;
+}
+
+.reviews li {
+  margin: 10px 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+}
+
+.upgrades {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 30px;
+}
+
+.upgrade {
+  background-color: rgb(75, 75, 185);
+  padding: 10px;
+  text-align: center;
+  border: 1px solid black;
+  max-height: 10ch;
+}
+
+.upgrades a {
+  text-decoration: underline;
+  align-items: center;
+  justify-content: center;
+  margin-left: 40px;
+  color: blue;
+  font-family: Roboto, sans-serif;
+
+  
+}
+
+.copyright {
+  margin-top: 40px;
+  font-family: "Open Sans", sans-serif;
+}
+
+
+
+@media only screen and (min-width: 32.5em) {
+  body {
+    max-width: 85%;
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 2px solid blue;  
+  }
+
+  #wrapper {
+    background-color: #ffffff;
+    padding: 10px;
+  
+  }
+
+  .siteName a {
+    font-size: 45px;
+  }
+
+  #tools a {
+    font-size: 25px;
+  }
+
+  h1 {
+    font-size: 35px;
+  }
+
+  .description {
+    max-width: 30ch;
+  }
+
+  .today {
+    margin-top: 15px;
+  }
+
+  h2, .description h2{
+    font-size: 27px;
+  }
+
+  .description h3 {
+    font-size: 20px;
+  }
+
+  #container {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 15px;
+  }
+
+  .reviews li {
+    font-size: 20px;
+  }
+
+  .review {
+    order: 2;
+    
+  }
+
+  .review h2{
+    margin-left: 10px;
+  }
+
+  .content {
+    padding-left: 40px;
+  }
+
+  
+}
+
+
