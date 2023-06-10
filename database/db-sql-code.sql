@@ -1,8 +1,15 @@
-CREATE TYPE public.account_type AS ENUM
+CREATE TYPE 
+  public.account_type 
+AS 
+  ENUM
     ('Client', 'Employee', 'Admin');
 
-ALTER TYPE public.account_type
-    OWNER TO mouhamed;
+
+
+ALTER TYPE 
+  public.account_type
+OWNER TO 
+  mouhamed;
 
 
 
@@ -57,6 +64,7 @@ CREATE TABLE IF NOT EXISTS public.account
 );
 
 
+
 -- Data for table `classification`
 INSERT INTO public.classification (classification_name)
 VALUES ('Custom'),
@@ -67,8 +75,8 @@ VALUES ('Custom'),
 
 
 
--- Data for table `inventory`
 
+-- Data for table `inventory`
 INSERT INTO public.inventory (
     inv_make,
     inv_model,

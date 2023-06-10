@@ -1,7 +1,5 @@
 select * from movie;
 
-
-
 ALTER TABLE 
   movie
 ALTER COLUMN 
@@ -34,12 +32,14 @@ CREATE TABLE movie
 	actorS TEXT NOT NULL);
 
 
+
 ALTER TABLE
   movie
 ALTER COLUMN 
  actors 
 TYPE 
   TEXT;
+
 
 
 INSERT INTO movie
@@ -118,6 +118,7 @@ VALUES
     'JADA RYDER ROCK DUKAKIS, GRETA MALDEN, RENEE TRACY, RAY JOHANSSON, VAL BOLGER, JUDY DEAN, ALEC WAYNE');
 
 
+
 UPDATE 
   movie 
 Set
@@ -137,11 +138,7 @@ WHERE
 
 
 
-
-
-
-
-INSERT INTO account
+  INSERT INTO account
   (account_firstname, 
   account_lastname, 
   account_email, 
@@ -169,35 +166,22 @@ WHERE
 
 
 
-SELECT 
-  inventory.inv_make,
-  inventory.inv_model,
-  classification.classification_name 
-FROM 
+UPDATE 
   inventory
-INNER JOIN 
-  classification 
-ON 
-  inventory.inv_id = classification.classification_id;
+SET 
+  inv_description = REPLACE(inv_description, 'the small interiors', 'a huge interior')
+WHERE
+  inv_id = 10;
+
+
+SELECT i.inv_make, i.inv_model, c.classification_name
+FROM inventory AS i
+INNER JOIN classification AS c ON i.classification_id = c.classification_id
+WHERE c.classification_name = 'Sport';
+
+
 
 
 UPDATE inventory
 SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
     inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
-    
-    
-    
-    
-    
-    
-
-
-
-
-
-
-
-
-
-UPDATE account
--- SET account_email = REPLACE(account_email, 'small interiors', 'a huge interior');
