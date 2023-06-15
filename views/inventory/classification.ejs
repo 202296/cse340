@@ -1,0 +1,15 @@
+<%# 
+***************************
+ *  Implement a value for the <title> element that describes the content of the view
+ * ************************** %>
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+    res.redirect('/')
+} %>
+
+
+<%# messages() %>
+
+<%# The Inventory Items Display %>
+<%- grid %>
