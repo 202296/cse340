@@ -56,6 +56,10 @@ nav ul{
   padding: 15px;
 }
 
+nav ul a {
+  color: #ffffff;
+}
+
 h1, h2, h3, h4, h5{
   font-size: 25px;
   font-family: Roboto, sans-serif;
