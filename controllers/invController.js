@@ -20,3 +20,8 @@ invCont.buildByClassificationId = async function (req, res, next) {
 }
 
 module.exports = invCont
+
+
+/* ***************************
+ *  Build a process to deliver a specific inventory item detail view
+ * ************************** */

@@ -123,16 +123,47 @@ h1, h2, h3, h4, h5{
   justify-content: center;
   margin-left: 40px;
   color: blue;
-  font-family: Roboto, sans-serif;
-
-  
+  font-family: Roboto, sans-serif;  
 }
 
 .copyright {
   margin-top: 40px;
   font-family: "Open Sans", sans-serif;
 }
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 10px 35px;
+  list-style: none;
+  padding-left: 0;
+}
+#inv-display li {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-gap: 35px;
+  border: 1px solid lightgrey;
+  border-radius: 25px;
+  max-width: 350px;
+  min-height: 400px;
+}
 
+#inv-display li a img {
+  border-radius: 25px;
+  width: 100%;
+}
+
+hr {
+  border: 3px solid black;
+}
+
+.namePrice {
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+.namePrice h2 a {
+  text-decoration: underline;
+}
 
 
 @media only screen and (min-width: 32.5em) {

@@ -58,6 +58,24 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+
+/* **************************************
+* Build the specific vehicle's information view HTML
+* ************************************ */
+Util.buildVehicleDetail = async function(info) {
+  let detail
+  if(info.length > 0) {
+    detail = '<div id="display_detail">'
+    info.forEach(data => {
+      detail += '<h2>'
+      detail += '<img src="">'
+    })
+  }
+}
+
+
+
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
