@@ -37,7 +37,7 @@ Util.buildClassificationGrid = async function(data){
       grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
       + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
       + 'details"><img src="' + vehicle.inv_thumbnail 
-      +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
+      +'" alt="Image_of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
       +' on CSE Motors" /></a>'
       grid += '<div class="namePrice">'
       grid += '<hr />'
@@ -67,10 +67,21 @@ Util.buildVehicleDetail = async function(info) {
   if(info.length > 0) {
     detail = '<div id="display_detail">'
     info.forEach(data => {
-      detail += '<h2>'
-      detail += '<img src="">'
+      detail += `<img src="${data.inv_image}" alt="Image_of ${data.inv_make} ${data.inv_model} Details on CSE Motors">`
+      detail += `<div class="detail">`
+      detail += '<h2> '+ data.inv_make +' ' + data.inv_model +' Details </h2>'
+      detail += `<span> Price: $${new Intl.NumberFormat('en-US').format(data.inv_price)} </span>`
+      detail += '<p> <span class="descript"> Description:</span> '+ data.inv_description +' </p>'
+      detail += '<p><span class="color">Color:</span> '+ data.inv_color +' </p>'
+      detail += '<p><span class="miles">Miles: </span>'+ data.inv_miles +' </p>'
+      detail += '</div>'
     })
+
+    detail += '</div>'
+  } else { 
+    detail += '<p class="notice">Sorry, no matching detail could be found.</p>'
   }
+  return detail
 }
 
 
