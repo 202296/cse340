@@ -38,9 +38,9 @@ Util.buildClassificationGrid = async function(data){
       + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
       + 'details"><img src="' + vehicle.inv_thumbnail 
       +'" alt="Image_of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
-      +' on CSE Motors" /></a>'
+      +' on CSE Motors"></a>'
       grid += '<div class="namePrice">'
-      grid += '<hr />'
+      grid += '<hr>'
       grid += '<h2>'
       grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
       + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
@@ -68,12 +68,12 @@ Util.buildVehicleDetail = async function(info) {
     detail = '<div id="display_detail">'
     info.forEach(data => {
       detail += `<img src="${data.inv_image}" alt="Image_of ${data.inv_make} ${data.inv_model} Details on CSE Motors">`
-      detail += `<div class="detail">`
+      detail += '<div class="detail">'
       detail += '<h2> '+ data.inv_make +' ' + data.inv_model +' Details </h2>'
-      detail += `<span> Price: $${new Intl.NumberFormat('en-US').format(data.inv_price)} </span>`
-      detail += '<p> <span class="descript"> Description:</span> '+ data.inv_description +' </p>'
-      detail += '<p><span class="color">Color:</span> '+ data.inv_color +' </p>'
-      detail += '<p><span class="miles">Miles: </span>'+ data.inv_miles +' </p>'
+      detail += `<span class="span"> Price: $${new Intl.NumberFormat('en-US').format(data.inv_price)} </span>`
+      detail += '<p class="desc"> <span class="descript"> Description:</span> '+ data.inv_description +' </p>'
+      detail += '<h3 class="color"><span class="colors">Color:</span> '+ data.inv_color +' </h3>'
+      detail += '<h3><span class="miles">Miles: </span>'+ data.inv_miles +' </h3>'
       detail += '</div>'
     })
 

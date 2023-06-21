@@ -165,7 +165,40 @@ hr {
   text-decoration: underline;
 }
 
+#display_detail {
+  display: grid;
+  grid-template-columns: auto;
+  grid-gap: 20px;
+}
 
+#display_detail img {
+  max-width: 100%;
+}
+
+.detail {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  font-weight: normal;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.5rem;
+}
+.detail h3 {
+  font-weight: normal;
+}
+
+.detail .span, .detail .color {
+  background-color: rgb(228, 225, 225);
+  padding: 15px;
+}
+
+.detail .span, .descript, .colors, .miles {
+  font-weight: bold;
+}
+
+.detail .desc {
+  padding: 15px;
+}
 @media only screen and (min-width: 32.5em) {
   body {
     max-width: 85%;
@@ -232,6 +265,10 @@ hr {
     padding-left: 40px;
   }
 
+  #display_detail {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
   
 }
 
