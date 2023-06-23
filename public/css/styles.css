@@ -130,20 +130,26 @@ h1, h2, h3, h4, h5{
   margin-top: 40px;
   font-family: "Open Sans", sans-serif;
 }
+
+.copyright span a {
+  font-family: "Open Sans", sans-serif;
+}
+
 #inv-display {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: 10px 35px;
+  justify-items: center;
   list-style: none;
   padding-left: 0;
 }
 #inv-display li {
   display: grid;
-  grid-template-rows: auto auto;
+  grid-template-rows: 250px auto;
   grid-gap: 35px;
   border: 1px solid lightgrey;
   border-radius: 25px;
-  max-width: 350px;
+  min-width: 350px;
   min-height: 400px;
 }
 
@@ -212,6 +218,7 @@ hr {
   padding-left: 25px;
   font-size: 2rem;
 }
+
 @media only screen and (min-width: 32.5em) {
   body {
     max-width: 85%;
