@@ -11,6 +11,8 @@ const env = require("dotenv").config();
 const baseController = require("./controllers/baseController");
 const app = express();
 const utilities = require("./utilities/");
+const errorRoute = require("./routes/errorRoute");
+
 
 
 /* ***********************
@@ -24,7 +26,7 @@ app.set("layout", "./layouts/layout"); // not at views root
 /* ***********************
  * Routes
  *************************/
-app.use(require("./routes/static"));
+app.use(utilities.handleErrors(require("./routes/static")));
 
 
 // Index route
@@ -32,12 +34,17 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 
 
 // Inventory routes
-app.use("/inv", require("./routes/inventoryRoute"));
+app.use("/inv", utilities.handleErrors(require("./routes/inventoryRoute")));
+
+
+app.use("/error", errorRoute);
+
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
-  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
+  next({status: 404, message: `<video class="elementor-video" src="https://inzonedesign.com/wp-content/uploads/2021/02/flamingos-404-error-page-waza.mp4" autoplay="" loop="" muted="muted" controlslist="nodownload"></video>`})
 })
+
 
 /* ***********************
 * Express Error Handler
@@ -46,23 +53,24 @@ app.use(async (req, res, next) => {
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if(err.status == 404){ message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
-  res.render("errors/error", {
+  if(err.status == 404){ message = err.message} else {message = '<div id="trigger_error"><p>Oh no! There was a crash. Maybe try a different route?</p></div>'}
+  res.status(err.status || 500).render("errors/error", {
     title: err.status || 'Server Error',
     message,
     nav
-  })
-})
+  });
+});
 
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
  *************************/
-const port = 5500;
-// const host = process.env.HOST;
+const port = process.env.PORT
+const host = process.env.HOST
 
 /* ***********************
  * Log statement to confirm server operation
  *************************/
-app.listen(process.env.PORT || port);
-console.log(`Web Server is listening at: ${process.env.PORT || port}`);
+app.listen(port, () => {
+  console.log(`app listening on ${host}:${port}`);
+});

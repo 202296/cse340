@@ -199,6 +199,19 @@ hr {
 .detail .desc {
   padding: 15px;
 }
+
+.elementor-video {
+  max-width: 100%;
+  min-height: 80ch;
+}
+
+#trigger_error {
+  background-image: url(../images/Capture.PNG);
+  max-width: 100%;
+  min-height: 66ch;
+  padding-left: 25px;
+  font-size: 2rem;
+}
 @media only screen and (min-width: 32.5em) {
   body {
     max-width: 85%;
