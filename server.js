@@ -65,7 +65,7 @@ app.use("/error", errorRoute);
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
-  next({status: 404, message: `<video class="elementor-video" src="https://inzonedesign.com/wp-content/uploads/2021/02/flamingos-404-error-page-waza.mp4" autoplay="" loop="" muted="muted" controlslist="nodownload"></video>`})
+  next({status: 404, message: `<img class="elementor-video" src="../images/404_image.PNG" alt="404 error images">`})
 })
 
 
