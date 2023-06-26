@@ -14,6 +14,7 @@ const utilities = require("./utilities/");
 const errorRoute = require("./routes/errorRoute");
 const session = require("express-session");
 const pool = require("./database/");
+const account = require("./routes/accountRoute");
 
 
 
@@ -59,6 +60,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome));
 // Inventory routes
 app.use("/inv", require("./routes/inventoryRoute"));
 
+app.use("/account", account);
 
 app.use("/error", errorRoute);
 

@@ -85,6 +85,53 @@ Util.buildVehicleDetail = async function(info) {
 }
 
 
+Util.buildUserAccount = async function() {
+  let login = "";
+  login += `<div id="account_container">`;
+  login += `<form action="/login" method="post">`;
+  login += `<label for="email">Email:</label>`;
+  login += `<input type="email" id="email" name="account_email" required>`;
+  login += `<label for="password">Password:</label>`;
+  login += `<input type="password" id="password" name="account_password" required>`;
+  login += `<button type="submit">Login</button>`;
+  login += `<p>Don't have an account? <a href="/account/register">Register here</a></p>`;
+  login += `</form>`;
+  login += `</div>`;
+
+  return login;
+};
+
+
+Util.buildUserRegistration = async function() {
+  let register = '';
+  register = `<div id="registration_container">
+  <h2>Registration</h2>
+  <form action="/register" method="post">
+    <label for="first-name">First Name:</label>
+    <input type="text" id="first-name" name="first_name" required>
+    
+    <label for="last-name">Last Name:</label>
+    <input type="text" id="last-name" name="last_name" required>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    
+    <label for="password">Password:</label>
+    <div class="password-toggle">
+      <input type="checkbox" id="password-toggle" onclick="togglePasswordVisibility()">
+      <label for="password-toggle">Show Password</label>
+    </div>
+    <input type="password" id="password" name="password" pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{12,}$" required title="Password must be at least 12 characters long, contain at least 1 capital letter, 1 number, and 1 special character">
+    
+    <button type="submit">Register</button>
+  </form>
+  <p>Already have an account? <a href="/account/login">Login here</a></p>
+</div>`
+
+  
+  return register
+}
+
 
 
 /* ****************************************
