@@ -237,10 +237,18 @@ form {
 
 label {
   display: block;
-  margin-bottom: 8px;
+  margin-top: 8px;
   font-weight: bold;
   color: #555;
   font-family: "Open Sans", sans-serif;
+}
+
+form input:required {
+  border-left: rgb(223, 17, 17) solid 5px;
+}
+
+form input:required:valid {
+  border-left: green solid 5px;
 }
 
 input[type="text"],
@@ -296,6 +304,14 @@ a {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+#registration_container h2 {
+  font-family: Roboto, sans-serif;
+}
+
+#registration_container p {
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+}
 
 .password-toggle {
   display: flex;
