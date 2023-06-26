@@ -4,12 +4,32 @@
  * ************************** %>
  <% if (title) { %>
     <h1><%= title %></h1>
-    <% } else {
-        res.redirect('/')
-    } %>
-    
-    
-    <%# messages() %>
-    
-    <%# Display the login %>
-    <%- login %>
+  <% } else { %>
+    <h1>Error</h1>
+    <p>Sorry, an error occurred.</p>
+  
+    <% if (error && error.msg) { %>
+      <ul class="error-list">
+        <% for (let i = 0; i < error.msg.length; i++) { %>
+          <li><%= error.msg[i] %></li>
+        <% } %>
+      </ul>
+    <% } %>
+  
+  <% } %>
+   
+  
+ <%- messages() %> 
+
+
+<%# Display the login %>
+<div id="account_container">
+<form action="" method="post">
+<label for="email">Email:</label>
+<input type="email" id="email" name="account_email" required>
+<label for="password">Password:</label>
+<input type="password" id="password" name="account_password" required>
+<button type="submit">Login</button>
+<p>Don't have an account? <a href="/account/register">Register here</a></p>
+</form>
+</div>
