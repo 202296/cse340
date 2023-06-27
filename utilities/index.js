@@ -73,7 +73,7 @@ Util.buildVehicleDetail = async function(info) {
       detail += `<span class="span"> Price: $${new Intl.NumberFormat('en-US').format(data.inv_price)} </span>`
       detail += '<p class="desc"> <span class="descript"> Description:</span> '+ data.inv_description +' </p>'
       detail += '<h3 class="color"><span class="colors">Color:</span> '+ data.inv_color +' </h3>'
-      detail += '<h3><span class="miles">Miles: </span>'+ data.inv_miles +' </h3>'
+      detail += `<h3><span class="miles">Miles: </span> ${new Intl.NumberFormat('en-US').format(data.inv_miles)} </h3>`
       detail += '</div>'
     })
 

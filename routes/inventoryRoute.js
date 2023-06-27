@@ -10,4 +10,6 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 // Route to build a process to deliver a specific inventory item detail view
 router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId));
 
+router.get("/", utilities.handleErrors(invController.buildTheManagement))
+
 module.exports = router;

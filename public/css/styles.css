@@ -39,6 +39,7 @@ body {
 #tools a {
   color: #000000;
   font-family: Roboto, sans-serif;
+  font-size: 22px;
 }
 
 nav {
@@ -48,7 +49,6 @@ nav {
 nav ul{
   list-style-type: none;
   font-family: Roboto, sans-serif;
-  font-size: 1.3rem;
   display: flex;
   color: #ffffff;
   justify-content: space-between;
@@ -65,6 +65,9 @@ h1, h2, h3, h4, h5{
   font-family: Roboto, sans-serif;
 }
 
+h1, h2 {
+  text-align: center;
+}
 
 .vehicle_img {
   max-width: 100%;
@@ -221,7 +224,7 @@ hr {
 
 
 #account_container {
-  max-width: 500px;
+  max-width: 400px;
   margin: 0 auto;
   padding: 20px;
   font-family: "Open Sans", sans-serif;
@@ -284,15 +287,10 @@ form p {
   text-align: center;
 }
 
-a {
+form a {
   color: #0004ff;
   font-family: "Open Sans", sans-serif;
 }
-
-
-
-
-
 
 #registration_container {
   max-width: 400px;
@@ -323,6 +321,24 @@ a {
   margin-right: 5px;
 }
 
+.notice {
+  text-align: center;
+  color: red;
+  list-style-type: none;
+  font-family: "Open Sans", sans-serif;
+}
+
+.link-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  margin-bottom: 10px;
+  text-align: center;
+  text-decoration: underline;
+}
+
 
 @media only screen and (min-width: 32.5em) {
   body {
@@ -337,6 +353,10 @@ a {
     background-color: #ffffff;
     padding: 10px;
   
+  }
+
+  nav ul{
+  font-size: 1.3rem;
   }
 
   .siteName a {
