@@ -4,19 +4,9 @@
  * ************************** %>
  <% if (title) { %>
     <h1><%= title %></h1>
-  <% } else { %>
-    <h1>Error</h1>
-    <p>Sorry, an error occurred.</p>
-  
-    <% if (error && error.msg) { %>
-      <ul class="error-list">
-        <% for (let i = 0; i < error.msg.length; i++) { %>
-          <li><%= error.msg[i] %></li>
-        <% } %>
-      </ul>
-    <% } %>
-  
-  <% } %>
+    <% } else {
+        res.redirect('/')
+    } %>
    
   
  <%- messages() %> 

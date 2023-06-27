@@ -3,23 +3,29 @@
 *  Implement a value for the <title> element that describes the content of the view
 ************************** %>
 <% if (title) { %>
-    <h1><%= title %></h1>
-  <% } else { %>
-    <h1>Error</h1>
-    <p>Sorry, an error occurred.</p>
+  <h1><%= title %></h1>
+  <% } else {
+      res.redirect('/')
+  } %>
   
-    <% if (error && error.msg) { %>
-      <ul class="error-list">
-        <% for (let i = 0; i < error.msg.length; i++) { %>
-          <li><%= error.msg[i] %></li>
-        <% } %>
-      </ul>
-    <% } %>
   
+  
+  
+<%- messages() %>
+
+
+
+
+ <% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
   <% } %>
   
-  
-  <%- messages() %>
+
+
   
 <%# Display registration %>
 <div id="registration_container">
