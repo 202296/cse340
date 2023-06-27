@@ -26,19 +26,19 @@
   
 
 
-  
+
 <%# Display registration %>
 <div id="registration_container">
   <h2>ALL FIELD ARE REQUIRED</h2>
   <form action="/account/register" method="post">
     <label for="first-name">First Name:</label>
-    <input type="text" id="first-name" name="account_firstname" placeholder="Enter your firstname" required>
+    <input type="text" id="first-name" name="account_firstname" placeholder="Enter your firstname" required value="<%= locals.account_firstname %>">
     
     <label for="last-name">Last Name:</label>
-    <input type="text" id="last-name" name="account_lastname" placeholder="Enter your lastname" required>
+    <input type="text" id="last-name" name="account_lastname" placeholder="Enter your lastname" required value="<%= locals.account_lastname %>">
     
     <label for="email">Email:</label>
-    <input type="email" id="email" name="account_email" placeholder="Enter a valid email address" required>
+    <input type="email" id="email" name="account_email" placeholder="Enter a valid email address" required value="<%= locals.account_email %>">
     
     <label for="password">Password:</label>
     
