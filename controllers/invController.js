@@ -6,7 +6,7 @@ const invCont = {}
 /* ***************************
  *  Build inventory by classification view
  * ************************** */
-invCont.buildByClassificationId = async function (req, res, next) {
+invCont.buildByClassificationId = async function(req, res, next) {
   const classification_id = req.params.classificationId
   const data = await invModel.getInventoryByClassificationId(classification_id)
   const grid = await utilities.buildClassificationGrid(data)
@@ -16,7 +16,6 @@ invCont.buildByClassificationId = async function (req, res, next) {
     title: className + " vehicles",
     nav,
     grid,
-    errors: null,
   })
 }
 
@@ -24,7 +23,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
 /* ***************************
  *  Build a process to deliver a specific inventory item detail view
  * ************************** */
-invCont.buildByInventoryId = async function (req, res, next) {
+invCont.buildByInventoryId = async function(req, res, next) {
   const inv_id = req.params.invId
   const info = await invModel.getVehicleInformationByInventoryId(inv_id)
   const detail = await utilities.buildVehicleDetail(info)
@@ -38,13 +37,52 @@ invCont.buildByInventoryId = async function (req, res, next) {
 }
 
 
-invCont.buildTheManagement = async function (req, res, next) {
+invCont.buildTheManagement = async function(req, res, next) {
   let nav = await utilities.getNav()
-  res.render("./inventory/management", {
+  res.render("inventory/management", {
     title: "Vehicle Management",
     nav,
   })
 }
 
+
+invCont.addClassification = async function(req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("inventory/add-classification", {
+    title: "Add Classification",
+    nav,
+    errors: null,
+  })
+};
+
+
+/* ****************************************
+*  Process of adding a new classification
+* *************************************** */
+invCont.addNewClassification = async function(req, res, next) {
+  let nav = await utilities.getNav()
+  const { classification_name } = req.body
+  console.log(`error ${classification_name} not found`)
+
+  const classificationData = await invModel.addNewClassification(classification_name);
+
+  if (classificationData) {
+    req.flash(
+      "notice",
+      `The ${classification_name} classification was successfully added.`
+    )
+    res.status(201).render("inventory/management", {
+      title: "Vehicle Management",
+      nav,
+    })
+  } else {
+    req.flash("notice", "Provide a correct classification name.")
+    res.status(501).render("inventory/add-classification", {
+      title: "Add Classification",
+      nav,
+      errors: null,
+    })
+  }
+}
 
 module.exports = invCont

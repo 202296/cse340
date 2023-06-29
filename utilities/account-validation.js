@@ -47,6 +47,27 @@ validate.registationRules = () => {
     ]
   }
 
+/* ******************************
+ * Check data and return errors or continue to registration
+ * ***************************** */
+validate.checkRegData = async (req, res, next) => {
+    const { account_firstname, account_lastname, account_email } = req.body
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      let nav = await utilities.getNav()
+      res.render("account/register", {
+        errors,
+        title: "Registration",
+        nav,
+        account_firstname,
+        account_lastname,
+        account_email,
+      })
+      return
+    }
+    next()
+  }
 
 /*  **********************************
  *  Login Data Validation Rules
@@ -75,27 +96,6 @@ validate.loginRules = () => {
 }
 
 
-/* ******************************
- * Check data and return errors or continue to registration
- * ***************************** */
-validate.checkRegData = async (req, res, next) => {
-    const { account_firstname, account_lastname, account_email } = req.body
-    let errors = []
-    errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      let nav = await utilities.getNav()
-      res.render("account/register", {
-        errors,
-        title: "Registration",
-        nav,
-        account_firstname,
-        account_lastname,
-        account_email,
-      })
-      return
-    }
-    next()
-  }
 
 /* ******************************
  * Check data and return errors or continue to registration
@@ -116,5 +116,39 @@ validate.checkLogData = async (req, res, next) => {
     }
     next()
   }
+
+/*  **********************************
+ *  Classification Data Validation Rules
+ * ********************************* */
+validate.classificationRules = () => {
+  return [
+    // classification name is required and must be string
+    body("classification_name")
+      .isLength({ min: 2 })
+      .isAlphanumeric()
+      .withMessage("Please provide a classification name."),
+  ]
+}
+
+/* ******************************
+ * Check data and return errors or continue to classification
+ * ***************************** */
+validate.checkClassData = async (req, res, next) => {
+  const { classification_name } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("inventory/add-classification", {
+      errors,
+      title: "Add Classification",
+      nav,
+      classification_name
+    })
+    return
+  }
+  next()
+}
+
   
   module.exports = validate
