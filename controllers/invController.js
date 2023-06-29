@@ -59,22 +59,27 @@ invCont.addClassification = async function(req, res, next) {
 /* ****************************************
 *  Process of adding a new classification
 * *************************************** */
-invCont.addNewClassification = async function(req, res, next) {
+invCont.addNewClassification = async function(req, res) {
   let nav = await utilities.getNav()
-  const { classification_name } = req.body
+  const { classification_name } = req.body;
   console.log(`error ${classification_name} not found`)
 
+try {
   const classificationData = await invModel.addNewClassification(classification_name);
 
   if (classificationData) {
     req.flash(
       "notice",
       `The ${classification_name} classification was successfully added.`
-    )
+    );
+    // The navigation immediately by fetching the updated classifications
+    const classifications = await invModel.getClassifications();
+    const nav = await utilities.getNav(classifications);
+
     res.status(201).render("inventory/management", {
       title: "Vehicle Management",
       nav,
-    })
+    });
   } else {
     req.flash("notice", "Provide a correct classification name.")
     res.status(501).render("inventory/add-classification", {
@@ -83,6 +88,15 @@ invCont.addNewClassification = async function(req, res, next) {
       errors: null,
     })
   }
+ } catch (error) {
+  req.flash("error", "An error occurred while adding the classification.");
+  res.status(501).render("inventory/add-classification", {
+    title: "Add Classification",
+    nav,
+    errors: null,
+  })
+}
+
 }
 
 module.exports = invCont
