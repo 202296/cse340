@@ -24,7 +24,9 @@
 
 
 <div id="classification_container">
+  <h2>FIELD IS REQUIRED</h2>
 <form action="/inv/add-classification" method="post">
+  <h3>NAME MUST BE ALPHABETIC CHARACTERS ONLY.</h3>
     <label for="classificationName">Classification Name:</label>
     <input type="text" id="classificatioName" name="classification_name" pattern="[A-Za-z0-9]+" title="Only alphanumeric characters are allowed" required value="<%= locals.classification_name %>">
     <button type="submit">Add Classification</button>

@@ -88,6 +88,7 @@ Util.buildClassSelect = async function(req, res, next) {
   let data = await invModel.getClassifications();
   let selectList = ''
   selectList += `<select id="classification" name="classification_id">`
+  selectList += `<option>Choose a Classification</option>`
   data.rows.forEach((classif) => {
   selectList += `<option value="${classif.classification_id}">${classif.classification_name}</option>`
   })

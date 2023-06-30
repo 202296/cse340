@@ -1,6 +1,5 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
-const { inventoryRules } = require("../utilities/account-validation")
 
 const invCont = {}
 
@@ -50,7 +49,7 @@ invCont.buildTheManagement = async function(req, res, next) {
 invCont.addClassification = async function(req, res, next) {
   let nav = await utilities.getNav()
   res.render("inventory/add-classification", {
-    title: "Add Classification",
+    title: "Add New Classification",
     nav,
     errors: null,
   })
@@ -95,7 +94,7 @@ try {
   } else {
     req.flash("notice", "Provide a correct classification name.")
     res.status(501).render("inventory/add-classification", {
-      title: "Add Classification",
+      title: "Add New Classification",
       nav,
       errors: null,
     })
@@ -103,7 +102,7 @@ try {
  } catch (error) {
   req.flash("error", "An error occurred while adding the classification.");
   res.status(501).render("inventory/add-classification", {
-    title: "Add Classification",
+    title: "Add New Classification",
     nav,
     errors: null,
   })

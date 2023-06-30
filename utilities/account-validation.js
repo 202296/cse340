@@ -126,7 +126,7 @@ validate.classificationRules = () => {
     body("classification_name")
       .isLength({ min: 2 })
       .isAlphanumeric()
-      .withMessage("Please provide a classification name."),
+      .withMessage("Please provide a correct classification name."),
   ]
 }
 
@@ -176,21 +176,17 @@ validate.inventoryRules = () => {
 
     // price is required and must be decimal or integer number
     body("inv_price")
-      .trim()
-      .isLength({ min: 1 })
-      .isDecimal({decimal_digits: "0.01"})
+      .isFloat({min: 1})
       .withMessage("Please provide a valid decimal or integer number."),
 
     // year is required and must be four digit
     body("inv_year")
-    .trim()
-    .isLength({ min: 4, max: 4 })
+    .isInt({ min: 1000, max: 9999 })
     .withMessage("Please provide a valid four-digit year."),
 
     // miles is required and must be digit
     body("inv_miles")
-      .trim()
-      .isLength({ min: 1 })
+      .isInt({ min: 0 })
       .isNumeric()
       .withMessage("Please provide only digits values for the field."),
 

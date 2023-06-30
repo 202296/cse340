@@ -249,11 +249,11 @@ label {
   font-family: "Open Sans", sans-serif;
 }
 
-form input:required {
+form input:required, form textarea:required {
   border-left: rgb(223, 17, 17) solid 5px;
 }
 
-form input:required:valid {
+form input:required:valid, form textarea:valid {
   border-left: green solid 5px;
 }
 
