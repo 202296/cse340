@@ -25,6 +25,21 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
+async function getInventoryByClassification
+(classificationId) {
+  try {
+    const result = await pool.query(
+      `SELECT * 
+      FROM public.inventory
+      WHERE classification_id = $1`,
+      [classificationId]
+    )
+    return result.rows;
+  } catch (error) {
+    console.error("getInventoryByClassification error " + error)
+  }
+}
+
 /* ***************************
  *  Get the data for a specific vehicle in inventory by inventory_id
  * ************************** */
@@ -58,17 +73,54 @@ async function addNewClassification(classification_name){
   }
 }
 
-async function addNewInventory(){
+// Get item details
+async function getItemDetails(itemId) {
   try {
-    const sql = "INSERT INTO inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *"
-    const result = await pool.query(sql, [inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color]
+    const result = await pool.query(
+      `SELECT 
+         * 
+       FROM 
+         public.inventory 
+       WHERE 
+         inv_id = $1`, [itemId]
+    )
+    return result.rows[0];
+  } catch (error) {
+    console.error("get getItemDetails error" + error)
+  }
+}
+
+async function addNewInventory(
+  inv_make,
+  inv_model,
+  inv_year,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_miles,
+  inv_color,
+  classification_id){
+  try {
+    const sql = "INSERT INTO inventory (inv_make, inv_model, inv_year, inv_description, inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *"
+    return await pool.query(sql, [
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id]
   );
-  return result.affectedRows === 1;
+  // return result.affectedRows === 1;
   } catch (error) {
     return error.message
   }
 }
 
 
-module.exports = {getClassifications, getInventoryByClassificationId, getVehicleInformationByInventoryId, addNewClassification, addNewInventory
+module.exports = {getClassifications, getInventoryByClassificationId, getVehicleInformationByInventoryId, addNewClassification, addNewInventory, getInventoryByClassification, getItemDetails
 };

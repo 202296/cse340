@@ -178,7 +178,7 @@ validate.inventoryRules = () => {
     body("inv_price")
       .trim()
       .isLength({ min: 1 })
-      .matches(/^(?:\d+|\d*\.\d+)$/)
+      .isDecimal({decimal_digits: "0.01"})
       .withMessage("Please provide a valid decimal or integer number."),
 
     // year is required and must be four digit
@@ -221,10 +221,12 @@ validate.checkInvData = async (req, res, next) => {
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
+    let select = await utilities.buildClassSelect();
     res.render("inventory/add-inventory", {
       errors,
       title: "Add Vehicle",
       nav,
+      select,
       inv_make, 
       inv_model, 
       inv_year, 

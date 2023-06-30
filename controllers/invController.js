@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
+const { inventoryRules } = require("../utilities/account-validation")
 
 const invCont = {}
 
@@ -56,16 +57,47 @@ invCont.addClassification = async function(req, res, next) {
 };
 
 invCont.addInventory = async function(req, res, next) {
-  const select = await utilities.buildClassSelect()
-  let nav = await utilities.getNav()
+  let select = await utilities.buildClassSelect();
+  let nav = await utilities.getNav();
   res.render("inventory/add-inventory", {
     title: "Add Vehicle",
     nav,
-    select,
+    select: select,
     errors: null,
   })
 };
 
+invCont.inventoryByClassification = async function(req, res, next) {
+  const classificationId = req.params.classificationId;
+
+  // Fetch the inventory items for the specified classification
+  const inventoryItems = await invModel.getInventoryByClassification(classificationId);
+  console.log(inventoryRules)
+  const grid = await utilities.buildClassificationGrid(inventoryItems)
+  let nav = await utilities.getNav()
+  const className = inventoryItems[0].classification_name
+  res.render("inventory/inventory-by-classification", {
+    title: className + " vehicles",
+    nav,
+    grid,
+  })
+}
+
+invCont.itemDetails = async function(req, res, next) {
+    const itemId = req.params.itemId;
+
+    // Fetch the details of the specified item
+    const itemDetails = await invModel.getItemDetails(itemId);
+    const detail = await utilities.buildVehicleDetail(itemDetails)
+    let nav = await utilities.getNav()
+    const className = `${itemDetails[0].inv_year} ${itemDetails[0].inv_make} ${itemDetails[0].inv_model}`
+    // Render the item details view and pass the item details
+    res.render("inventory/item-details", {
+    title: className,
+    nav,
+    detail,
+  })
+}
 
 /* ****************************************
 *  Process of adding a new classification
@@ -114,29 +146,33 @@ try {
 
 invCont.addNewInventory = async function(req, res) {
   let nav = await utilities.getNav()
-  const { 
-    inv_make, 
-    inv_model, 
-    inv_year, 
-    inv_description, 
-    inv_image, 
-    inv_thumbnail, 
-    inv_price, 
-    inv_miles, 
-    inv_color 
+
+  const {
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id
   } = req.body;
 
-try {
+  let select = await utilities.buildClassSelect();
+  
   const inventoryData = await invModel.addNewInventory(
-    inv_make, 
-    inv_model, 
-    inv_year, 
-    inv_description, 
-    inv_image, 
-    inv_thumbnail, 
-    inv_price, 
-    inv_miles, 
-    inv_color);
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id);
 
   if (inventoryData) {
     req.flash(
@@ -152,19 +188,10 @@ try {
     res.status(501).render("inventory/add-inventory", {
       title: "Add Vehicle",
       nav,
-      select,
+      select: select,
       errors: null,
     })
   }
- } catch (error) {
-  req.flash("error", "An error occurred while adding the classification.");
-  res.status(501).render("inventory/add-inventory", {
-    title: "Add Vehicle",
-    nav,
-    select,
-    errors: null,
-  })
-}
 
 }
 
