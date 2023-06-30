@@ -11,13 +11,6 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 // Route to build a process to deliver a specific inventory item detail view
 router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId));
 
-// Item details route
-router.get('/inventory/:itemId', invController.itemDetails);
-
-
-// Inventory by classification route
-router.get('/classification/:classificationId', invController.inventoryByClassification);
-
 router.get("/", utilities.handleErrors(invController.buildTheManagement));
 
 router.get("/add-classification", utilities.handleErrors(invController.addClassification));

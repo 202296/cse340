@@ -67,37 +67,6 @@ invCont.addInventory = async function(req, res, next) {
   })
 };
 
-invCont.inventoryByClassification = async function(req, res, next) {
-  const classificationId = req.params.classificationId;
-
-  // Fetch the inventory items for the specified classification
-  const inventoryItems = await invModel.getInventoryByClassification(classificationId);
-  console.log(inventoryRules)
-  const grid = await utilities.buildClassificationGrid(inventoryItems)
-  let nav = await utilities.getNav()
-  const className = inventoryItems[0].classification_name
-  res.render("inventory/inventory-by-classification", {
-    title: className + " vehicles",
-    nav,
-    grid,
-  })
-}
-
-invCont.itemDetails = async function(req, res, next) {
-    const itemId = req.params.itemId;
-
-    // Fetch the details of the specified item
-    const itemDetails = await invModel.getItemDetails(itemId);
-    const detail = await utilities.buildVehicleDetail(itemDetails)
-    let nav = await utilities.getNav()
-    const className = `${itemDetails[0].inv_year} ${itemDetails[0].inv_make} ${itemDetails[0].inv_model}`
-    // Render the item details view and pass the item details
-    res.render("inventory/item-details", {
-    title: className,
-    nav,
-    detail,
-  })
-}
 
 /* ****************************************
 *  Process of adding a new classification
