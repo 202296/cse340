@@ -55,6 +55,17 @@ invCont.addClassification = async function(req, res, next) {
   })
 };
 
+invCont.addInventory = async function(req, res, next) {
+  const select = await utilities.buildClassSelect()
+  let nav = await utilities.getNav()
+  res.render("inventory/add-inventory", {
+    title: "Add Vehicle",
+    nav,
+    select,
+    errors: null,
+  })
+};
+
 
 /* ****************************************
 *  Process of adding a new classification
@@ -93,6 +104,64 @@ try {
   res.status(501).render("inventory/add-classification", {
     title: "Add Classification",
     nav,
+    errors: null,
+  })
+}
+
+}
+
+
+
+invCont.addNewInventory = async function(req, res) {
+  let nav = await utilities.getNav()
+  const { 
+    inv_make, 
+    inv_model, 
+    inv_year, 
+    inv_description, 
+    inv_image, 
+    inv_thumbnail, 
+    inv_price, 
+    inv_miles, 
+    inv_color 
+  } = req.body;
+
+try {
+  const inventoryData = await invModel.addNewInventory(
+    inv_make, 
+    inv_model, 
+    inv_year, 
+    inv_description, 
+    inv_image, 
+    inv_thumbnail, 
+    inv_price, 
+    inv_miles, 
+    inv_color);
+
+  if (inventoryData) {
+    req.flash(
+      "notice",
+      `The ${inv_make} inventory was successfully added.`
+    );
+    res.status(201).render("inventory/management", {
+      title: "Vehicle Management",
+      nav,
+    });
+  } else {
+    req.flash("notice", "Provide a correct inventory name.")
+    res.status(501).render("inventory/add-inventory", {
+      title: "Add Vehicle",
+      nav,
+      select,
+      errors: null,
+    })
+  }
+ } catch (error) {
+  req.flash("error", "An error occurred while adding the classification.");
+  res.status(501).render("inventory/add-inventory", {
+    title: "Add Vehicle",
+    nav,
+    select,
     errors: null,
   })
 }

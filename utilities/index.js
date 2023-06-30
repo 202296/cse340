@@ -4,7 +4,7 @@ const Util = {}
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
-Util.getNav = async function (req, res, next) {
+Util.getNav = async function(req, res, next) {
   let data = await invModel.getClassifications()
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
@@ -83,6 +83,71 @@ Util.buildVehicleDetail = async function(info) {
   }
   return detail
 }
+
+Util.buildClassSelect = async function(req, res, next) {
+  let data = await invModel.getClassifications()
+  let selectList = ''
+  data.rows.forEach(classification => {
+  selectList += `<option value="${classification.classification_id}">${classification.classification_name}</option>`
+  })
+
+return selectList
+}
+
+// Util.buildInventory = async function(classifications) {
+
+// let inv_form = ''
+
+// inv_form += `<div id="inventory_container">`
+// inv_form += `<form action="/inv/add-inventory" method="post">`
+// inv_form += `<div class="form-group">`
+// inv_form +=  `<label for="classification">Classification:</label>`
+// inv_form += `<select id="classification" name="classification_id" required>`
+// inv_form +=  classifications
+// inv_form += `</select>`
+// inv_form += `</div>`
+// inv_form += `<div class="form-group">`
+// inv_form += `<label for="make">Make:</label>`
+// inv_form += `<input type="text" id="invMake" name="inv_make" pattern="[A-Za-z]{3}" title="Please enter three alphabetic characters" placeholder="Min of 3 characters" required value="${locals.inv_make}">`
+// inv_form += `</div>`
+// inv_form += `<div class="form-group">`
+// inv_form += `<label for="model">Model:</label>`
+// inv_form += `<input type="text" id="invModel" name="inv_model" pattern="[A-Za-z]{3}" title="Please enter three alphabetic characters" placeholder="Min of 3 characters" required value="${locals.inv_model}">`
+// inv_form += `</div>`
+// inv_form += `<div class="form-group">`
+// inv_form += `<label for="description">Description:</label>`
+// inv_form += `<input type="text" id="invDescription" name="inv_description" required value="${locals.inv_description}">`
+// inv_form += `</div>`
+// inv_form += `<div class="form-group">`
+// inv_form += `<label for="image">Image Path:</label>`
+// inv_form += `<input type="text" id="invImage" name="inv_image" required value="/images/vehicles/no-image.png">`
+// inv_form += `</div>`
+// inv_form += `<div class="form-group">`
+// inv_form += `<label for="thumbnail">Thumbnail Path:</label>`
+// inv_form += `<input type="text" id="invThumbnail" name="inv_thumbnail" required value="/images/vehicles/no-image.png">`
+// inv_form += `</div>`
+// inv_form += `<div class="form-group">`
+// inv_form += `<label for="price">Price:</label>`
+// inv_form += `<input type="number" id="invPrice" name="inv_price" pattern="^(?:\d+|\d*\.\d+)$" title="Please enter a decimal or integer number" placeholder="decimal or integer" required value="${locals.inv_price}">`
+// inv_form += `</div>`
+// inv_form += `<div class="form-group">`
+// inv_form += `<label for="year">Year:</label>`
+// inv_form += `<input type="number" id="invYear" name="inv_year" pattern="\d{4}" title="Please enter a four-digit year" required placeholder="4-digit year" value="${locals.inv_year}">`
+// inv_form += `</div>`
+// inv_form += `<div class="form-group">`
+// inv_form += `<label for="miles">Miles:</label>`
+// inv_form += `<input type="number" id="invMiles" name="inv_miles" pattern="[0-9]+" title="Please enter digits only" placeholder="digits only" required value="${locals.inv_miles}">`
+// inv_form += `</div>`
+// inv_form += `<div class="form-group">`
+// inv_form += `<label for="color">Color:</label>`
+// inv_form += `<input type="text" id="invColor" name="inv_color" required value="${locals.inv_color}">`
+// inv_form += `</div>`
+// inv_form += `<button type="submit">Add Inventory</button>`
+// inv_form += `</form>`
+// inv_form += `</div>`
+
+// return inv_form;
+// }
 
 
 /* ****************************************
