@@ -69,6 +69,10 @@ h1, h2 {
   text-align: center;
 }
 
+h3 {
+  font-size: 15px;
+}
+
 .vehicle_img {
   max-width: 100%;
 }
@@ -323,7 +327,7 @@ form a {
 
 .notice {
   text-align: center;
-  color: red;
+  color: rgb(184, 0, 0);
   list-style-type: none;
   font-family: "Open Sans", sans-serif;
 }
