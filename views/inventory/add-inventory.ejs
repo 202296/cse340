@@ -28,45 +28,43 @@
 <h2>ALL FIELDS ARE REQUIRED</h2>
 <form action="/inv/add-inventory" method="post">
   <div class="form-group">
-    <label for="classification">Classification:</label>
-    
-      <%- select %>
+    <%- select %>
 
   </div>
   <div class="form-group">
-    <label for="make">Make:</label>
+    <label for="invMake">Make:</label>
     <input type="text" id="invMake" name="inv_make" minlength="3" title="The minimum alphabetic characters is three" placeholder="Min of 3 characters" required value="<%= locals.inv_make %>">
   </div>
   <div class="form-group">
-    <label for="model">Model:</label>
+    <label for="invModel">Model:</label>
     <input type="text" id="invModel" name="inv_model" minlength="3" title="The minimum alphabetic characters is three" placeholder="Min of 3 characters" required value="<%= locals.inv_model %>">
   </div>
   <div class="form-group">
-    <label for="description">Description:</label>
-    <textarea id="invDescription" rows="10" cols="45" name="inv_description" minlength="1" required value="<%= locals.inv_description %>"></textarea>
+    <label for="invDescription">Description:</label>
+    <textarea id="invDescription" rows="10" cols="45" name="inv_description" required><%= locals.inv_description %></textarea>
   </div>
   <div class="form-group">
-    <label for="image">Image Path:</label>
+    <label for="invImage">Image Path:</label>
     <input type="text" id="invImage" name="inv_image" required value="/images/vehicles/no-image.png">
   </div>
   <div class="form-group">
-    <label for="thumbnail">Thumbnail Path:</label>
+    <label for="invThumbnail">Thumbnail Path:</label>
     <input type="text" id="invThumbnail" name="inv_thumbnail" required value="/images/vehicles/no-image-tn.png">
   </div>
   <div class="form-group">
-    <label for="price">Price:</label>
+    <label for="invPrice">Price:</label>
     <input type="number" id="invPrice" name="inv_price" step="0.01" min="0" title="Please enter a decimal or integer number" placeholder="decimal or integer" required value="<%= locals.inv_price %>">
   </div>
   <div class="form-group">
-    <label for="year">Year:</label>
+    <label for="invYear">Year:</label>
     <input type="number" id="invYear" name="inv_year" max="9999" min="1800" title="Please enter a four-digit year" required placeholder="4-digit year" value="<%= locals.inv_year %>">
   </div>
   <div class="form-group">
-    <label for="miles">Miles:</label>
+    <label for="invMiles">Miles:</label>
     <input type="number" id="invMiles" name="inv_miles" step="1" min="0" title="Please enter digits only" placeholder="digits only" required value="<%= locals.inv_miles %>">
   </div>
   <div class="form-group">
-    <label for="color">Color:</label>
+    <label for="invColor">Color:</label>
     <input type="text" id="invColor" name="inv_color" required value="<%= locals.inv_color %>">
   </div>
   <button type="submit">Add Inventory</button>

@@ -249,17 +249,24 @@ label {
   font-family: "Open Sans", sans-serif;
 }
 
-form input:required, form textarea:required {
-  border-left: rgb(223, 17, 17) solid 5px;
+form input:invalid, form textarea:invalid {
+  background-color: rgb(236, 210, 210);
 }
 
-form input:required:valid, form textarea:valid {
-  border-left: green solid 5px;
+form input:valid, form textarea:valid {
+  background-color: rgb(207, 236, 207);
+}
+
+form input:not(:focus), form textarea:not(:focus) {
+  background-color: white;
 }
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="number"],
+textarea,
+select {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -331,7 +338,6 @@ form a {
   text-align: center;
   text-decoration: underline;
 }
-
 
 @media only screen and (min-width: 32.5em) {
   body {

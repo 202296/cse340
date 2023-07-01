@@ -156,6 +156,11 @@ validate.checkClassData = async (req, res, next) => {
  * ********************************* */
 validate.inventoryRules = () => {
   return [
+    // classification name is required and must be string
+    body("classification_id")
+      .notEmpty()
+      .withMessage("Please select a classification."),
+
     // make is required and must be string
     body("inv_make")
       .trim()
@@ -211,7 +216,8 @@ validate.checkInvData = async (req, res, next) => {
     inv_thumbnail, 
     inv_price, 
     inv_miles, 
-    inv_color 
+    inv_color,
+    classification_id 
   } = req.body
   let errors = []
   errors = validationResult(req)
@@ -231,7 +237,8 @@ validate.checkInvData = async (req, res, next) => {
       inv_thumbnail, 
       inv_price, 
       inv_miles, 
-      inv_color
+      inv_color,
+      classification_id
     })
     return
   }
