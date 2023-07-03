@@ -73,9 +73,7 @@ invCont.addInventory = async function(req, res, next) {
 invCont.addNewClassification = async function(req, res) {
   let nav = await utilities.getNav()
   const { classification_name } = req.body;
-  console.log(`error ${classification_name} not found`)
 
-try {
   const classificationData = await invModel.addNewClassification(classification_name);
 
   if (classificationData) {
@@ -99,14 +97,6 @@ try {
       errors: null,
     })
   }
- } catch (error) {
-  req.flash("error", "An error occurred while adding the classification.");
-  res.status(501).render("inventory/add-classification", {
-    title: "Add New Classification",
-    nav,
-    errors: null,
-  })
-}
 
 }
 
