@@ -17,6 +17,8 @@ router.get("/add-classification", utilities.handleErrors(invController.addClassi
 
 router.get("/add-inventory", utilities.handleErrors(invController.addInventory));
 
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
 // POST route to add a new classification
 router.post(
   "/add-classification",
