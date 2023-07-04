@@ -27,7 +27,7 @@
 
 <%# Display the login %>
 <div id="account_container">
-<form action="/account/login" method="post">
+<form id="loginForm" action="/account/login" method="post">
 <label for="email">Email:</label>
 <input type="email" id="email" name="account_email" placeholder="Enter a valid email address" required value="<%= locals.account_email %>">
 <label for="password">Password:</label>
