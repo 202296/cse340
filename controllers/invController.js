@@ -36,7 +36,9 @@ invCont.buildByInventoryId = async function(req, res, next) {
   })
 }
 
-
+/* ***************************
+ *  Build a process to deliver the management view
+ * ************************** */
 invCont.buildTheManagement = async function(req, res, next) {
   let nav = await utilities.getNav()
   const classificationSelect = await utilities.buildClassSelect()
@@ -47,7 +49,9 @@ invCont.buildTheManagement = async function(req, res, next) {
   })
 }
 
-
+/* ***************************
+ *  Build a process to deliver the classification view
+ * ************************** */
 invCont.addClassification = async function(req, res, next) {
   let nav = await utilities.getNav()
   res.render("inventory/add-classification", {
@@ -57,6 +61,9 @@ invCont.addClassification = async function(req, res, next) {
   })
 };
 
+/* ***************************
+ *  Build a process to deliver the inventory view
+ * ************************** */
 invCont.addInventory = async function(req, res, next) {
   let select = await utilities.buildClassSelect();
   let nav = await utilities.getNav();
@@ -80,6 +87,8 @@ invCont.getInventoryJSON = async (req, res, next) => {
     next(new Error("No data returned"))
   }
 }
+
+
 
 
 /* ****************************************
@@ -147,7 +156,7 @@ invCont.addNewInventory = async function(req, res) {
       inv_miles,
       inv_color,
       classification_id);
-
+const classificationSelect = await utilities.buildClassSelect() 
   if (inventoryData) {
     req.flash(
       "notice",
@@ -165,6 +174,169 @@ invCont.addNewInventory = async function(req, res) {
       nav,
       select: select,
       errors: null,
+    })
+  }
+
+}
+
+/* ***************************
+ *  Build a process to deliver the edit inventory view
+ * ************************** */
+invCont.updateInventory = async function(req, res, next) {
+  let nav = await utilities.getNav();
+  const inventory_id = parseInt(req.params.inv_id)
+  const invItem = await invModel.getVehicleInformationByInventoryId(inventory_id);
+  let select = await utilities.buildClassSelect(invItem[0].classification_id);
+  const itemName = `${invItem[0].inv_make} ${invItem[0].inv_model}`
+  res.render("inventory/edit-inventory", {
+    title: "Edit " + itemName,
+    nav,
+    select: select,
+    errors: null,
+    inv_id: invItem[0].inv_id,
+    inv_make: invItem[0].inv_make,
+    inv_model: invItem[0].inv_model,
+    inv_year: invItem[0].inv_year,
+    inv_description: invItem[0].inv_description,
+    inv_image: invItem[0].inv_image,
+    inv_thumbnail: invItem[0].inv_thumbnail,
+    inv_price: invItem[0].inv_price,
+    inv_miles: invItem[0].inv_miles,
+    inv_color: invItem[0].inv_color,
+    classification_id: invItem[0].classification_id
+  })
+};
+
+/* ***************************
+ *  Build a process to deliver the delete inventory view
+ * ************************** */
+invCont.delectInventory = async function(req, res, next) {
+  let nav = await utilities.getNav();
+  const invent_id = parseInt(req.params.inv_id)
+  const invData = await invModel.getVehicleInformationByInventoryId(invent_id)
+  let select = await utilities.buildClassSelect(invData[0].classification_id);
+  const itemName = `${invData[0].inv_make} ${invData[0].inv_model}`
+  res.render("inventory/delete-confirm", {
+    title: "Delete " + itemName,
+    nav,
+    select: select,
+    errors: null,
+    inv_id: invData[0].inv_id,
+    inv_make: invData[0].inv_make,
+    inv_model: invData[0].inv_model,
+    inv_year: invData[0].inv_year,
+    inv_price: invData[0].inv_price,
+    classification_id: invData[0].classification_id
+  })
+};
+
+invCont.modifyInventory = async function(req, res) {
+  let nav = await utilities.getNav()
+
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id
+  } = req.body;
+  
+  const updateResult = await invModel.modifyInventory(
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id);
+  const classificationSelect = await utilities.buildClassSelect()
+  if (updateResult) {
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash(
+      "notice",
+      `The ${itemName} was successfully updated.`
+    );
+    res.status(201).render("inventory/management", {
+      title: "Vehicle Management",
+      nav,
+      classificationSelect,
+    });
+  } else {
+    let select = await utilities.buildClassSelect(classification_id);
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, the insert failed.")
+    res.status(501).render("inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      nav,
+      select: select,
+      errors: null,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id
+    })
+  }
+
+}
+
+invCont.removeInventory = async function(req, res) {
+  let nav = await utilities.getNav()
+
+  const {
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price,
+      classification_id
+  } = req.body;
+  
+  const deleteResult = await invModel.removeInventory(
+      inv_id);
+  const classificationSelect = await utilities.buildClassSelect()
+  if (deleteResult) {
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash(
+      "notice",
+      `The ${itemName} was successfully deleted.`
+    );
+    res.status(201).render("inventory/management", {
+      title: "Vehicle Management",
+      nav,
+      classificationSelect,
+    });
+  } else {
+    let select = await utilities.buildClassSelect(classification_id);
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, the delete failed.")
+    res.status(501).render("inventory/delete-confirm", {
+      title: "Delete " + itemName,
+      nav,
+      select: select,
+      errors: null,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price,
+      classification_id
     })
   }
 

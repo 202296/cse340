@@ -179,6 +179,16 @@ validate.inventoryRules = () => {
       .isLength({ min: 1 })
       .withMessage("Please provide a description."),
 
+    body("inv_image")
+      .trim()
+      .isLength({min: 3})
+      .withMessage("Please provide a valid image link"),
+
+    body("inv_thumbnail")
+      .trim()
+      .isLength({min: 3})
+      .withMessage("Please provide a valid thumbnail link"),
+
     // price is required and must be decimal or integer number
     body("inv_price")
       .isFloat({min: 1})
@@ -245,5 +255,50 @@ validate.checkInvData = async (req, res, next) => {
   next()
 }
 
+/* ******************************
+ * Check data and return errors or continue to edit
+ * ***************************** */
+validate.checkUpdateData = async (req, res, next) => {
+  const {
+    inv_id, 
+    inv_make, 
+    inv_model, 
+    inv_year, 
+    inv_description, 
+    inv_image, 
+    inv_thumbnail, 
+    inv_price, 
+    inv_miles, 
+    inv_color,
+    classification_id, 
+  } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    let select = await utilities.buildClassSelect(classification_id);
+  const itemName = `${inv_make} ${inv_model}`
+  res.render("inventory/edit-inventory", {
+      errors,
+      title: "Edit " + itemName,
+      nav,
+      select,
+      inv_id,
+      inv_make, 
+      inv_model, 
+      inv_year, 
+      inv_description, 
+      inv_image, 
+      inv_thumbnail, 
+      inv_price, 
+      inv_miles, 
+      inv_color,
+      classification_id,
+      
+    })
+    return
+  }
+  next()
+}
 
   module.exports = validate
