@@ -142,7 +142,7 @@ async function updateAccount(req, res) {
   if (updResult) {
     req.flash(
       "notice",
-      `Congratulations, you\'re updated your account. ${account_firstname}.`
+      `Congratulations, ${account_firstname} your account is updated successfully.`
     )
     const updatedAccount = await accountModel.myAccount(account_id);
     res.status(201).render("account/account-management", {
@@ -199,10 +199,12 @@ async function updatePassword(req, res) {
       "notice",
       `Congratulations, your password as been successfully updated.`
     )
+    const updatedAccount = await accountModel.myAccount(account_id);
     res.status(201).render("account/account-management", {
       title: "Account Management",
       nav,
       errors: null,
+      updatedAccount
     })
   } else {
     req.flash("notice", "Sorry, the process for updating your password failed.")

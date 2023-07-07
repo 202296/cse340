@@ -89,7 +89,7 @@ Util.buildVehicleDetail = async function(info) {
 Util.buildClassSelect = async function(req, res, next) {
   let data = await invModel.getClassifications();
   let selectList = ''
-  selectList += `<label for="classification">Classification:</label>`
+  selectList += `<label for="classificationList">Classification:</label>`
   selectList += `<select id="classificationList" name="classification_id" required>`
   selectList += `<option value="" disabled selected>Choose a Classification</option>`
   data.rows.forEach((classif) => {
