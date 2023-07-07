@@ -26,11 +26,12 @@ validate.registationRules = () => {
         .isEmail()
         .normalizeEmail() // refer to validator.js docs
         .withMessage("A valid email is required.")
-        .custom(async (account_email) => {
-        const emailExists = await accountModel.checkExistingEmail(account_email)
-        if (emailExists){
-            throw new Error("Email exists. Please log in or use different email")
-        }
+        .custom(async (account_email, { req }) => {
+          const accountId = req.params.accountId;
+          const existingEmail = await accountModel.checkExistingEmail(account_email);
+          if (existingEmail && existingEmail.account_id === accountId) {
+            throw new Error("Email already exists. Please choose a different email.");
+          }
         }),
   
       // password is required and must be strong password
