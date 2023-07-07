@@ -34,7 +34,7 @@ router.post(
 router.post(
   "/update-account/", 
   validator.updateRules(),
-  validator.checkUpdateData,
+  validator.checkUpdateAccount,
   utilities.handleErrors(accountController.updateAccount)
   )
 

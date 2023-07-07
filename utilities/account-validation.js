@@ -26,14 +26,13 @@ validate.registationRules = () => {
         .isEmail()
         .normalizeEmail() // refer to validator.js docs
         .withMessage("A valid email is required.")
-        .custom(async (account_email, { req }) => {
-          const accountId = req.params.accountId;
-          const existingEmail = await accountModel.checkExistingEmail(account_email);
-          if (existingEmail && existingEmail.account_id === accountId) {
-            throw new Error("Email already exists. Please choose a different email.");
+        .custom(async (account_email) => {
+          const emailExists = await accountModel.checkExistingEmail(account_email)
+          if (emailExists){
+              throw new Error("Email exists. Please log in or use different email")
           }
-        }),
-  
+          }),
+
       // password is required and must be strong password
       body("account_password")
         .trim()
@@ -95,7 +94,6 @@ validate.loginRules = () => {
       .withMessage("Password does not meet requirements."),
   ]
 }
-
 
 
 /* ******************************
@@ -333,7 +331,7 @@ validate.updateRules = () => {
 }
 
 
-validate.checkUpdateData = async (req, res, next) => {
+validate.checkUpdateAccount = async (req, res, next) => {
   const { account_firstname, account_lastname, account_email } = req.body
   let errors = []
   errors = validationResult(req)
