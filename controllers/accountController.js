@@ -144,10 +144,12 @@ async function updateAccount(req, res) {
       "notice",
       `Congratulations, you\'re updated your account. ${account_firstname}.`
     )
+    const updatedAccount = await accountModel.myAccount(account_id);
     res.status(201).render("account/account-management", {
       title: "Account Management",
       nav,
       errors: null,
+      accountData: updatedAccount,
     })
   } else {
     req.flash("notice", "Sorry, the update failed.")
@@ -195,7 +197,7 @@ async function updatePassword(req, res) {
   if (passResult) {
     req.flash(
       "notice",
-      `Congratulations, your password as been successfully updated ${account_firstname}.`
+      `Congratulations, your password as been successfully updated.`
     )
     res.status(201).render("account/account-management", {
       title: "Account Management",
@@ -216,5 +218,17 @@ async function updatePassword(req, res) {
   }
 }
 
+async function buildLogout(req, res) {
+  try {
+    // Clear the token cookie
+    res.clearCookie("jwt");
 
-  module.exports = { buildLogin, buildRegistration, registerAccount, accountLogin, buildAccountManagement, editAccount, updateAccount, updatePassword}
+    // Redirect to the home view
+    res.redirect("/");
+  } catch (error) {
+    console.error("Logout error: ", error);
+    res.redirect("/");
+  }
+}
+
+  module.exports = { buildLogin, buildRegistration, registerAccount, accountLogin, buildAccountManagement, editAccount, updateAccount, updatePassword, buildLogout}

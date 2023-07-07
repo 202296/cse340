@@ -24,7 +24,7 @@
 
 <div id="update_container">
     <h2>ALL FIELDS ARE REQUIRED</h2>
-    <form action="/account/update-account" method="post">
+    <form id="update-account-form" action="/account/update-account" method="post">
       <label for="first-name">First Name:</label>
       <input type="text" id="first-name" name="account_firstname" minlength="1" placeholder="Enter your firstname" required value="<%= locals.account_firstname %>">
       
@@ -34,7 +34,7 @@
       <label for="email">Email:</label>
       <input type="email" id="email" name="account_email" placeholder="Enter a valid email address" required value="<%= locals.account_email %>">
       <button type="submit">Update Account</button>
-      <input type="hidden" name="account_id"
+      <input type="hidden" id="account-id" name="account_id"
     <% if(locals.account_id) { %> value="<%= locals.account_id %>"
     <% } %>>
     </form>
