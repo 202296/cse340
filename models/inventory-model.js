@@ -115,7 +115,6 @@ async function addNewInventory(
       inv_color,
       classification_id]
   );
-  // return result.affectedRows === 1;
   } catch (error) {
     return error.message
   }

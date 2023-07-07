@@ -125,8 +125,6 @@ invCont.addNewClassification = async function(req, res) {
 
 }
 
-
-
 invCont.addNewInventory = async function(req, res) {
   let nav = await utilities.getNav()
 

@@ -123,6 +123,15 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
+ Util.checkAccess = (req, res, next) => {
+  if (res.locals.loggedin && res.locals.accountData && (res.locals.accountData.account_type === 'Employee' || res.locals.accountData.account_type === 'Admin')) {
+    next();
+  } else {
+    req.flash("notice", "Unauthorized access");
+    return res.redirect("/account/login");
+  }
+};
+
  /* ****************************************
  *  Check Login
  * ************************************ */

@@ -12,13 +12,16 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId));
 
 // Route to build a process to deliver the inventory management view.
-router.get("/", utilities.handleErrors(invController.buildTheManagement));
+router.get("/", utilities.checkAccess, utilities.handleErrors(invController.buildTheManagement));
 
 // Route to build a process to deliver the classification view
-router.get("/add-classification", utilities.handleErrors(invController.addClassification));
+router.get(
+  "/add-classification",
+  utilities.handleErrors(invController.addClassification));
 
 // Route to build a process to deliver the inventory view.
-router.get("/add-inventory", utilities.handleErrors(invController.addInventory));
+router.get("/add-inventory",
+utilities.handleErrors(invController.addInventory));
 
 // Route to build a process to deliver all the inventories item through an URL
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))

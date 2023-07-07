@@ -231,7 +231,9 @@ hr {
 #registration_container,
 #classification_container,
 #inventory_container,
-#classificationSelect {
+#classificationSelect,
+#update_container,
+#password-container {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;

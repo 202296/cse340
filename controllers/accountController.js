@@ -35,6 +35,21 @@ async function buildLogin(req, res, next) {
         errors: null,
     })
   }
+
+  async function editAccount(req, res, next) {
+    let nav = await utilities.getNav()
+    const account_id = parseInt(req.params.accountId)
+    const account = await accountModel.myAccount(account_id)
+    res.render("account/update-account", {
+        title: "Update Account",
+        nav,
+        errors: null,
+        account_id: account.account_id,
+        account_firstname: account.account_firstname,
+        account_lastname: account.account_lastname,
+        account_email: account.account_email
+    })
+  }
   
 /* ****************************************
 *  Process Registration
@@ -113,4 +128,93 @@ async function accountLogin(req,res) {
  }
 }
 
-  module.exports = { buildLogin, buildRegistration, registerAccount, accountLogin, buildAccountManagement}
+async function updateAccount(req, res) {
+  let nav = await utilities.getNav()
+  const { account_firstname, account_lastname, account_email, account_id} = req.body
+
+  const updResult = await accountModel.updateAccount(
+    account_firstname,
+    account_lastname,
+    account_email, 
+    account_id
+  )
+
+  if (updResult) {
+    req.flash(
+      "notice",
+      `Congratulations, you\'re updated your account. ${account_firstname}.`
+    )
+    res.status(201).render("account/account-management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("account/update-account", {
+      title: "Update Account",
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    })
+  }
+}
+
+async function updatePassword(req, res) {
+  let nav = await utilities.getNav()
+  const { account_id, account_firstname,
+    account_lastname,
+    account_email, account_password } = req.body
+
+  // Hash the password before storing
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", 'Sorry, the process for updating your password failed.')
+    res.status(500).render("account/update-account", {
+      title: "Update Account",
+      nav,
+      errors: null,
+      account_id,
+      account_firstname, 
+      account_lastname, 
+      account_email
+    })
+  }
+
+  const passResult = await accountModel.updatePassword(
+    hashedPassword,
+    account_id
+  )
+
+  if (passResult) {
+    req.flash(
+      "notice",
+      `Congratulations, your password as been successfully updated ${account_firstname}.`
+    )
+    res.status(201).render("account/account-management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", "Sorry, the process for updating your password failed.")
+    res.status(501).render("account/update-account", {
+      title: "Update Account",
+      nav,
+      errors: null,
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    })
+  }
+}
+
+
+  module.exports = { buildLogin, buildRegistration, registerAccount, accountLogin, buildAccountManagement, editAccount, updateAccount, updatePassword}
