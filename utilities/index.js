@@ -86,27 +86,22 @@ Util.buildVehicleDetail = async function(info) {
   return detail
 }
 
-Util.buildClassSelect = async function(id=null) {
-  let data = await invModel.getClassifications();
-  let selectList = ''
-  selectList += `<label for="classificationList">Classification:</label>`
-  selectList += `<select id="classificationList" name="classification_id" required>`
-  selectList += `<option value="" disabled`
-  if (!id) {
-    selectList += " selected"
-  }
-  selectList += `>Choose a Classification</option>`
-  data.rows.forEach((classif) => {
-  selectList += `<option value="${classif.classification_id}"`
-  if (id === classif.classification_id) {
-    selectList += " selected"
-  }
-  selectList += `>${classif.classification_name}</option>`
-  })
-  selectList += `</select>`
+Util.buildClassSelect = async function(id = null) {
+      const data = await invModel.getClassifications();
+      const selectList = `
+        <label for="classificationList">Classification:</label>
+        <select id="classificationList" name="classification_id" required>
+          <option value="" disabled ${!id ? "selected" : ""}>Choose a Classification</option>
+          ${data.rows.map(classif => `
+            <option value="${classif.classification_id}" ${id === classif.classification_id ? "selected" : ""}>
+              ${classif.classification_name}
+            </option>
+          `)}
+        </select>
+      `;
+      return selectList;
+    };
   
-  return selectList
-}
 
 /* ****************************************
 * Middleware to check token validity
