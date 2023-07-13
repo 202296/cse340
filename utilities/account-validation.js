@@ -403,7 +403,7 @@ validate.reviewRule = () => {
 
     body("rev_rating")
       .isInt({ min: 1, max: 6 })
-      .withMessage("Please rate from 0 - 6"),
+      .withMessage("Please rate from 1 - 6"),
 
     body("rev_comments")
       .trim()
