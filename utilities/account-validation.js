@@ -1,6 +1,7 @@
 const utilities = require(".");
 const { body, validationResult } = require("express-validator");
 const accountModel = require("../models/account-model");
+const invModel = require("../models/inventory-model")
 const validate = {}
 
 /*  **********************************
@@ -366,5 +367,84 @@ validate.passwordRules = () => {
 ]
 }
 
+validate.reviewRule = () => {
+  return [
+
+    // firstname is required and must be string
+    body("rev_firstname")
+    .trim()
+    .isLength({ min: 2 })
+    .withMessage("Please provide a first name."), // on error this message is sent.
+
+  // lastname is required and must be string
+  body("rev_lastname")
+    .trim()
+    .isLength({ min: 2 })
+    .withMessage("Please provide a last name."), // on error this message is sent.
+
+  // valid email is required and cannot already exist in the database
+  body("rev_email")
+    .trim()
+    .isEmail()
+    .normalizeEmail() // refer to validator.js docs
+    .withMessage("A valid email is required."),
+
+    // make is required and must be string
+    body("rev_make")
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("Please provide a make."),
+
+    // model is required
+    body("rev_model")
+      .trim()
+      .isLength({ min: 3 })
+      .withMessage("Please provide a model."),
+
+    body("rev_rating")
+      .isInt({ min: 1, max: 6 })
+      .withMessage("Please rate from 0 - 6"),
+
+    body("rev_comments")
+      .trim()
+      .isLength({min: 2})
+      .withMessage("Please put a correct comment"),
+
+  ]
+
+}
+      
+
+validate.checkReviewData = async (req, res, next) => {
+  const { 
+    rev_firstname, 
+    rev_lastname, 
+    rev_email, 
+    rev_make, 
+    rev_model, 
+    rev_rating, 
+    rev_comments
+ } = req.body
+  let errors = []
+  errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    res.render("inventory/review", {
+      title: "Leave a Review",
+      nav,
+      errors,
+      rev_firstname, 
+      rev_lastname, 
+      rev_email,
+      rev_make, 
+      rev_model, 
+      rev_rating, 
+      rev_comments, 
+      
+    })
+    return
+  }
+  next()
+}
 
   module.exports = validate

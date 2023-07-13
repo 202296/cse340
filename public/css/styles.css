@@ -233,7 +233,8 @@ hr {
 #inventory_container,
 #classificationSelect,
 #update_container,
-#password-container {
+#password-container,
+#review_container {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;

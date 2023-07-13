@@ -88,6 +88,15 @@ invCont.getInventoryJSON = async (req, res, next) => {
   }
 }
 
+invCont.reviews = async (req, res, next) => {
+  let nav = await utilities.getNav()
+  res.render("inventory/review", {
+    title: "Leave a Review",
+    nav,
+    errors: null,
+  })
+};
+
 
 
 
@@ -339,5 +348,48 @@ invCont.removeInventory = async function(req, res) {
   }
 
 }
+
+
+invCont.addNewReview = async function(req, res) {
+    let nav = await utilities.getNav()
+  
+    const {
+      rev_firstname, 
+      rev_lastname, 
+      rev_email, 
+      rev_make, 
+      rev_model, 
+      rev_rating, 
+      rev_comments,
+    } = req.body;
+    
+    const reviewResult = await invModel.reviewVehicle(
+      rev_firstname, 
+      rev_lastname, 
+      rev_email, 
+      rev_make, 
+      rev_model, 
+      rev_rating, 
+      rev_comments,
+    );
+
+    if (reviewResult) {
+      const itemName = `${rev_make} ${rev_model}`
+      req.flash(
+        "notice",
+        `The ${itemName} was successfully review.`
+      );
+      res.redirect("/")
+    } else {
+      let nav = await utilities.getNav()
+      req.flash("notice", "Sorry, the review failed.")
+      res.status(501).render("inventory/review", {
+        title: "Leave a Review",
+        nav,
+        errors: null,
+      })
+    }
+  
+  }
 
 module.exports = invCont

@@ -32,6 +32,8 @@ router.get("/edit/:inv_id", utilities.handleErrors(invController.updateInventory
 // Route to build a process to deliver a specific inventory item detail to be delect.
 router.get("/delete/:inv_id", utilities.handleErrors(invController.delectInventory))
 
+router.get("/review", utilities.handleErrors(invController.reviews))
+
 // POST route to add a new classification
 router.post(
   "/add-classification",
@@ -57,5 +59,12 @@ router.post(
 router.post(
   "/delete/", 
   utilities.handleErrors(invController.removeInventory))
+
+router.post(
+  "/review",
+  validator.reviewRule(),
+  validator.checkReviewData,
+  utilities.handleErrors(invController.addNewReview)
+)
 
 module.exports = router;

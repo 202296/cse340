@@ -120,6 +120,33 @@ async function addNewInventory(
   }
 }
 
+
+async function reviewVehicle(
+  rev_firstname, 
+  rev_lastname, 
+  rev_email, 
+  rev_make, 
+  rev_model, 
+  rev_rating, 
+  rev_comments,
+) {
+  try {
+    const sql = "INSERT INTO public.review (rev_firstname, rev_lastname, rev_email, rev_make, rev_model, rev_rating, rev_comments) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *"
+    return await pool.query(sql, [
+      rev_firstname, 
+      rev_lastname, 
+      rev_email, 
+      rev_make, 
+      rev_model, 
+      rev_rating, 
+      rev_comments, 
+    ]
+  );
+  } catch (error) {
+    return error.message
+  }
+}
+
 /* ***************************
  *  Update Inventory Data
  * ************************** */
@@ -170,5 +197,5 @@ async function removeInventory(inv_id) {
 }
 
 
-module.exports = {getClassifications, getInventoryByClassificationId, getVehicleInformationByInventoryId, addNewClassification, addNewInventory, getInventoryByClassification, getItemDetails, modifyInventory, removeInventory
+module.exports = {getClassifications, getInventoryByClassificationId, getVehicleInformationByInventoryId, addNewClassification, addNewInventory, getInventoryByClassification, getItemDetails, modifyInventory, removeInventory, reviewVehicle
 };
