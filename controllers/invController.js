@@ -90,9 +90,15 @@ invCont.getInventoryJSON = async (req, res, next) => {
 
 invCont.reviews = async (req, res, next) => {
   let nav = await utilities.getNav()
+  const reviewId = parseInt(req.params.inv_id)
+  const rev = await invModel.getVehicleForReview(reviewId)
+  const name = await utilities.insertName(rev);
+  console.log(rev)
   res.render("inventory/review", {
     title: "Leave a Review",
     nav,
+    name,
+    inv_id: rev.inv_id,
     errors: null,
   })
 };
@@ -361,6 +367,7 @@ invCont.addNewReview = async function(req, res) {
       rev_model, 
       rev_rating, 
       rev_comments,
+      inv_id 
     } = req.body;
     
     const reviewResult = await invModel.reviewVehicle(
@@ -371,6 +378,7 @@ invCont.addNewReview = async function(req, res) {
       rev_model, 
       rev_rating, 
       rev_comments,
+      inv_id
     );
 
     if (reviewResult) {
@@ -381,11 +389,13 @@ invCont.addNewReview = async function(req, res) {
       );
       res.redirect("/")
     } else {
-      let nav = await utilities.getNav()
+      const rev = await invModel.getVehicleForReview(inv_id)
+      const name = await utilities.insertName(rev);
       req.flash("notice", "Sorry, the review failed.")
       res.status(501).render("inventory/review", {
         title: "Leave a Review",
         nav,
+        name,
         errors: null,
       })
     }

@@ -403,7 +403,7 @@ validate.reviewRule = () => {
 
     body("rev_rating")
       .isInt({ min: 1, max: 6 })
-      .withMessage("Please rate from 1 - 6"),
+      .withMessage("Please rate from 0 - 6"),
 
     body("rev_comments")
       .trim()
@@ -423,15 +423,20 @@ validate.checkReviewData = async (req, res, next) => {
     rev_make, 
     rev_model, 
     rev_rating, 
-    rev_comments
+    rev_comments,
+    inv_id
  } = req.body
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
+    const rev = await invModel.getVehicleForReview(inv_id)
+    console.log(rev)
+    const name = await utilities.insertName(rev);
     res.render("inventory/review", {
       title: "Leave a Review",
       nav,
+      name,
       errors,
       rev_firstname, 
       rev_lastname, 
@@ -439,7 +444,8 @@ validate.checkReviewData = async (req, res, next) => {
       rev_make, 
       rev_model, 
       rev_rating, 
-      rev_comments, 
+      rev_comments,
+      inv_id 
       
     })
     return

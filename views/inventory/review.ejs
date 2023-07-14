@@ -48,22 +48,18 @@
 <br> <br> <br>
 <h2>Create a Review</h2>
 <p>Please submit your guest blog posts by using the fields below.</p>
-<div class="form-group">
-    <label for="revMake">Make:</label>
-    <input type="text" id="revMake" name="rev_make" minlength="3" title="The minimum alphabetic characters is three" placeholder="Min of 3 characters" required value="<%= locals.rev_make %>">
-  </div>
-  <div class="form-group">
-    <label for="revModel">Model:</label>
-    <input type="text" id="revModel" name="rev_model" minlength="3" title="The minimum alphabetic characters is three" placeholder="Min of 3 characters" required value="<%= locals.rev_model %>">
-  </div>
+  <%- name %>
   <div>
     <label for="rating">Rating:</label>
-    <input type="number" id="rating" name="rev_rating" min="1" max="6" title="The maximum number is six" placeholder="rate from 1 - 6" required value="<%= locals.rev_rating %>">
+    <input type="number" id="rating" name="rev_rating" min="1" max="6" required value="<%= locals.rev_rating %>">
   </div>
   <div>
     <label for="comments">Comments:</label>
     <textarea id="comments" name="rev_comments" rows="4" minlength="2" required><%= locals.rev_comments %></textarea>
   </div>
   <button type="submit">Submit</button>
+  <input type="hidden" name="inv_id"
+<% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+<% }else { %> value="<%= inv_id %>" <%}%>>
 </form>
 </div>

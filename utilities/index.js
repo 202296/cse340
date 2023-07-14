@@ -76,7 +76,7 @@ Util.buildVehicleDetail = async function(info) {
       detail += '<p class="desc"> <span class="descript"> Description:</span> '+ data.inv_description +' </p>'
       detail += '<h3 class="color"><span class="colors">Color:</span> '+ data.inv_color +' </h3>'
       detail += `<h3><span class="miles">Miles: </span> ${new Intl.NumberFormat('en-US').format(data.inv_miles)} </h3>`
-      detail += `<h3><a href="/inv/review">Review</a></h3>`
+      detail += `<h3><a href="/inv/review/${data.inv_id}">Review</a></h3>`
       detail += '</div>'
     })
 
@@ -87,6 +87,19 @@ Util.buildVehicleDetail = async function(info) {
     detail += '<p class="notice">Sorry, no matching detail could be found.</p>'
   }
   return detail
+}
+
+Util.insertName = async function (revi) {
+  let name = ''
+  name += `<div class="form-group">
+    <label for="revMake">Make:</label>
+    <input type="text" id="revMake" name="rev_make" minlength="3" title="The minimum alphabetic characters is three" placeholder="Min of 3 characters" required value="${revi.inv_make}" readonly>
+  </div>
+  <div class="form-group">
+    <label for="revModel">Model:</label>
+    <input type="text" id="revModel" name="rev_model" minlength="3" title="The minimum alphabetic characters is three" placeholder="Min of 3 characters" required value="${revi.inv_model}" readonly>
+  </div>`
+  return name
 }
 
 Util.buildClassSelect = async function(id = null) {

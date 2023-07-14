@@ -70,22 +70,13 @@ CREATE TABLE IF NOT EXISTS public.review
   rev_firstname character varying NOT NULL,
   rev_lastname character varying NOT NULL,
   rev_email character varying NOT NULL,
-  inv_make character varying NOT NULL,
-  inv_model character varying NOT NULL,
+  rev_make character varying NOT NULL,
+  rev_model character varying NOT NULL,
   rev_rating integer,
   rev_comments character varying NOT NULL,
   inv_id integer NOT NULL,
 	CONSTRAINT review_pkey PRIMARY KEY (review_id)
 );
-
-
--- Create relationship between `reviews`, `account` and `inventory` tables
-ALTER TABLE IF EXISTS public.review
-  ADD CONSTRAINT fk_inventory FOREIGN KEY (inv_id)
-  REFERENCES public.inventory (inv_id) MATCH SIMPLE
-  ON UPDATE CASCADE
-  ON DELETE NO ACTION;
-
 
 
 -- Data for table `classification`

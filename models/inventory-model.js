@@ -59,6 +59,16 @@ async function getVehicleInformationByInventoryId(inv_id) {
   }
 }
 
+async function getVehicleForReview(inv_id) {
+  try {
+    const data = await pool.query(`SELECT inv_id, inv_make, inv_model FROM public.inventory WHERE inv_id = $1`, [inv_id]
+  )
+  return data.rows[0]
+  } catch (error) {
+    console.error("get inventorybyid error" + error)
+  }
+}
+
 
 /* *****************************
 *   Add a new classification
@@ -129,9 +139,10 @@ async function reviewVehicle(
   rev_model, 
   rev_rating, 
   rev_comments,
+  inv_id
 ) {
   try {
-    const sql = "INSERT INTO public.review (rev_firstname, rev_lastname, rev_email, rev_make, rev_model, rev_rating, rev_comments) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *"
+    const sql = "INSERT INTO public.review (rev_firstname, rev_lastname, rev_email, rev_make, rev_model, rev_rating, rev_comments, inv_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *"
     return await pool.query(sql, [
       rev_firstname, 
       rev_lastname, 
@@ -139,7 +150,8 @@ async function reviewVehicle(
       rev_make, 
       rev_model, 
       rev_rating, 
-      rev_comments, 
+      rev_comments,
+      inv_id 
     ]
   );
   } catch (error) {
@@ -197,5 +209,5 @@ async function removeInventory(inv_id) {
 }
 
 
-module.exports = {getClassifications, getInventoryByClassificationId, getVehicleInformationByInventoryId, addNewClassification, addNewInventory, getInventoryByClassification, getItemDetails, modifyInventory, removeInventory, reviewVehicle
+module.exports = {getClassifications, getInventoryByClassificationId, getVehicleInformationByInventoryId, addNewClassification, addNewInventory, getInventoryByClassification, getItemDetails, modifyInventory, removeInventory, reviewVehicle, getVehicleForReview
 };
