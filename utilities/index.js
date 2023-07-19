@@ -69,14 +69,17 @@ Util.buildVehicleDetail = async function(info) {
   if(info.length > 0) {
     detail = '<div id="display_detail">'
     info.forEach(data => {
+      detail += `<div>`
       detail += `<img src="${data.inv_image}" alt="Image_of ${data.inv_make} ${data.inv_model} Details on CSE Motors">`
+      detail += `<h3><a href="/inv/review/${data.inv_id}">Review</a></h3>`
+      detail += `</div>`
       detail += '<div class="detail">'
       detail += '<h2> '+ data.inv_make +' ' + data.inv_model +' Details </h2>'
       detail += `<span class="span"> Price: $${new Intl.NumberFormat('en-US').format(data.inv_price)} </span>`
       detail += '<p class="desc"> <span class="descript"> Description:</span> '+ data.inv_description +' </p>'
       detail += '<h3 class="color"><span class="colors">Color:</span> '+ data.inv_color +' </h3>'
       detail += `<h3><span class="miles">Miles: </span> ${new Intl.NumberFormat('en-US').format(data.inv_miles)} </h3>`
-      detail += `<h3><a href="/inv/review/${data.inv_id}">Review</a></h3>`
+      
       detail += '</div>'
     })
 

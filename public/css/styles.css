@@ -69,10 +69,6 @@ h1, h2 {
   text-align: center;
 }
 
-h3 {
-  font-size: 15px;
-}
-
 .vehicle_img {
   max-width: 100%;
 }
@@ -184,6 +180,13 @@ hr {
   grid-gap: 20px;
 }
 
+#display_detail h3 a {
+  font-size: 60px;
+  margin-left: 5cm;
+  text-decoration: underline;
+  font-family: "Open Sans", sans-serif;
+}
+
 #display_detail img {
   max-width: 100%;
 }
@@ -207,6 +210,14 @@ hr {
 
 .detail .span, .descript, .colors, .miles {
   font-weight: bold;
+}
+
+.color, .miles {
+  font-size: 1.5rem;
+}
+
+.miles h3{
+  font-size: 1.5rem;
 }
 
 .detail .desc {
